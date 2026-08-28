@@ -56,14 +56,21 @@ export default function App() {
   // Countdown Timer State
   const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 45 });
 
-  // Fetch Courses & Faculty
+  // Fetch Courses & Faculty (Safe Way)
   useEffect(() => {
     API.get('/api/courses')
-      .then(res => setCourses(res.data))
+      .then(res => {
+        // Agar response array hai tabhi state update karein
+        const data = Array.isArray(res.data) ? res.data : (res.data.courses || []);
+        setCourses(data);
+      })
       .catch(err => console.error(err));
 
-    fetch('/api/faculty')
-      .then(res => setFaculty(res.data))
+    API.get('/api/faculty')
+      .then(res => {
+        const data = Array.isArray(res.data) ? res.data : (res.data.faculty || []);
+        setFaculty(data);
+      })
       .catch(err => console.error(err));
   }, []);
 
