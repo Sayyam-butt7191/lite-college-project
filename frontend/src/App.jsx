@@ -5,7 +5,7 @@ import AdminDashboard from './components/AdminDashboard';
 
 
 //live render backend url
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lite-college-website.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lite-college-project.onrender.com';
 
 export const API = axios.create({
   baseURL: API_BASE_URL,
