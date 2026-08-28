@@ -58,14 +58,12 @@ export default function App() {
 
   // Fetch Courses & Faculty
   useEffect(() => {
-    fetch('http://localhost:5000/api/courses')
-      .then(res => res.json())
-      .then(data => setCourses(data))
+    API.get('/api/courses')
+      .then(res => setCourses(res.data))
       .catch(err => console.error(err));
 
-    fetch('http://localhost:5000/api/faculty')
-      .then(res => res.json())
-      .then(data => setFaculty(data))
+    fetch('/api/faculty')
+      .then(res => setFaculty(res.data))
       .catch(err => console.error(err));
   }, []);
 
