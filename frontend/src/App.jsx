@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import AdminDashboard from './components/AdminDashboard';
+
 
 //live render backend url
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lite-college-website.onrender.com';
 
 export API = axios.create({
   baseURL: API_BASE_URL,
-})
-import { motion, AnimatePresence } from 'framer-motion';
-import AdminDashboard from './components/AdminDashboard';
+});
+
 
 // Framer Motion Animation Variants
 const fadeInUp = {
