@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 //live render backend url
-const API_BASE_URL = import .meta.env.VITE_API_URL || 'https://lite-college-website.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lite-college-website.onrender.com';
 
 const API = axios.create({
-  baseURL : API_BASE_URL,
+  baseURL: API_BASE_URL,
 })
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminDashboard from './components/AdminDashboard';
@@ -143,7 +144,7 @@ export default function App() {
     if (!isLoggedIn) {
       return (
         <div className="min-h-screen bg-slate-900 flex justify-center items-center p-4 font-sans">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white w-full max-w-md rounded-2xl p-8 shadow-2xl relative border border-slate-100"
@@ -239,17 +240,17 @@ export default function App() {
     <div className="font-sans text-gray-800 bg-gray-50 relative overflow-hidden">
 
       {/* 1. ANIMATED NAVBAR */}
-      <motion.nav 
+      <motion.nav
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="flex justify-between items-center px-6 md:px-10 py-4 bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40"
       >
         <div className="flex items-center gap-3">
-          <motion.svg 
+          <motion.svg
             whileHover={{ rotate: 10, scale: 1.05 }}
-            className="w-10 h-10 text-red-600" 
-            viewBox="0 0 24 24" 
+            className="w-10 h-10 text-red-600"
+            viewBox="0 0 24 24"
             fill="currentColor"
           >
             <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 13l-8-3.64V17l8 4 8-4v-5.64L12 15z" fill="#DC2626" />
@@ -288,7 +289,7 @@ export default function App() {
 
       {/* 2. HERO SECTION WITH CINEMATIC MOTION */}
       <section id="home" className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white px-6 md:px-10 py-24 flex flex-col md:flex-row items-center justify-between relative">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -301,18 +302,18 @@ export default function App() {
             Learn industry-standard skills in coding, design, and data. Join LITE Computer College and start building your career today.
           </p>
           <div className="flex gap-4">
-            <motion.a 
-              whileHover={{ scale: 1.05 }} 
+            <motion.a
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="#courses" 
+              href="#courses"
               className="bg-red-600 px-6 py-3 rounded-md font-medium hover:bg-red-700 transition shadow-lg shadow-red-900/40 inline-block"
             >
               Explore Courses
             </motion.a>
-            <motion.a 
-              whileHover={{ scale: 1.05 }} 
+            <motion.a
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="#about" 
+              href="#about"
               className="border border-white/40 px-6 py-3 rounded-md font-medium hover:bg-white/10 transition inline-block text-center"
             >
               Learn More
@@ -320,23 +321,23 @@ export default function App() {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 50, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 0.8 }}
           className="md:w-1/2 mt-12 md:mt-0 flex justify-center relative"
         >
-          <motion.div 
+          <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
             className="relative"
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-600 rounded-2xl blur-lg opacity-30"></div>
-            <img 
-              src="/images/hero.jpg" 
-              alt="Students" 
+            <img
+              src="/images/hero.jpg"
+              alt="Students"
               onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600"; }}
-              className="rounded-xl shadow-2xl border-2 border-white/20 max-w-full h-80 object-cover relative z-10" 
+              className="rounded-xl shadow-2xl border-2 border-white/20 max-w-full h-80 object-cover relative z-10"
             />
           </motion.div>
         </motion.div>
@@ -344,7 +345,7 @@ export default function App() {
 
       {/* 3. STATS BANNER */}
       <section className="max-w-6xl mx-auto -mt-10 px-4 relative z-20">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -359,14 +360,14 @@ export default function App() {
 
       {/* 4. PROMO BANNER WITH LIVE COUNTDOWN TIMER */}
       <section className="bg-blue-950 text-white my-16 py-12 px-6 relative overflow-hidden">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
           className="max-w-4xl mx-auto bg-blue-900/60 p-8 rounded-2xl border border-blue-800 flex flex-col md:flex-row items-center justify-between relative shadow-2xl"
         >
-          <motion.div 
+          <motion.div
             animate={{ scale: [1, 1.1, 1], rotate: [12, 15, 12] }}
             transition={{ repeat: Infinity, duration: 2 }}
             className="absolute top-4 right-4 bg-red-600 text-white rounded-full w-16 h-16 flex flex-col items-center justify-center font-bold text-xs shadow-lg z-10"
@@ -392,10 +393,10 @@ export default function App() {
               ))}
             </div>
 
-            <motion.button 
-              whileHover={{ scale: 1.03 }} 
+            <motion.button
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              onClick={handleClaimDiscount} 
+              onClick={handleClaimDiscount}
               className="bg-red-600 px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition shadow-lg shadow-red-900/50"
             >
               Claim 50% Discount Now
@@ -420,7 +421,7 @@ export default function App() {
           <p className="text-gray-500 text-sm mt-1">We provide more than just education; we provide a career path.</p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -432,8 +433,8 @@ export default function App() {
             { title: 'Recognized Certification', desc: 'Earn certificates globally valued by top tech employers.' },
             { title: 'Job Placement', desc: 'Career counseling and job placement support to land your dream job.' }
           ].map((item, idx) => (
-            <motion.div 
-              key={idx} 
+            <motion.div
+              key={idx}
               variants={scaleIn}
               whileHover={{ y: -8 }}
               className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300"
@@ -463,7 +464,7 @@ export default function App() {
           </div>
         </div>
 
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
@@ -483,11 +484,11 @@ export default function App() {
                   <div>
                     {c.badge && <span className="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded z-10 shadow-md">{c.badge}</span>}
                     <div className="overflow-hidden h-44 bg-gray-200">
-                      <img 
-                        src={c.image} 
-                        alt={c.title} 
+                      <img
+                        src={c.image}
+                        alt={c.title}
                         onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500"; }}
-                        className="h-full w-full object-cover group-hover:scale-110 transition duration-500" 
+                        className="h-full w-full object-cover group-hover:scale-110 transition duration-500"
                       />
                     </div>
                     <div className="p-5">
@@ -513,12 +514,12 @@ export default function App() {
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-blue-950">Meet Our Faculty</h2>
           <p className="text-gray-500 text-sm mt-1">Dedicated professionals committed to your success.</p>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
             {faculty.length > 0 ? (
               faculty.map((f, idx) => (
-                <motion.div 
-                  key={f._id} 
+                <motion.div
+                  key={f._id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
@@ -527,11 +528,11 @@ export default function App() {
                   className="bg-white p-6 rounded-xl shadow-sm text-center flex flex-col justify-between hover:shadow-lg transition"
                 >
                   <div>
-                    <img 
-                      src={f.image} 
-                      alt={f.name} 
+                    <img
+                      src={f.image}
+                      alt={f.name}
                       onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200"; }}
-                      className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-blue-900 mb-3 shadow-md" 
+                      className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-blue-900 mb-3 shadow-md"
                     />
                     <h3 className="font-bold text-gray-900">{f.name}</h3>
                     <p className="text-[10px] font-bold text-red-600 tracking-wider uppercase mt-1">{f.role}</p>
@@ -550,9 +551,9 @@ export default function App() {
       {/* 8. CONTACT & ENQUIRY FORM */}
       <section id="contact" className="bg-[#1a2c42] py-20 px-6 relative">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Get In Touch */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -586,8 +587,8 @@ export default function App() {
             {/* Social Icons */}
             <div className="flex gap-3 pt-4">
               {['f', '𝕏', '📷', 'in', '▶'].map((social, idx) => (
-                <motion.button 
-                  key={idx} 
+                <motion.button
+                  key={idx}
                   whileHover={{ scale: 1.2, backgroundColor: '#DC2626' }}
                   className="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold transition text-gray-200"
                 >
@@ -598,7 +599,7 @@ export default function App() {
           </motion.div>
 
           {/* Right Column: Enquiry Form Card */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -647,10 +648,10 @@ export default function App() {
               </div>
 
               <div className="flex items-center gap-2 pt-1">
-                <input 
-                  type="checkbox" 
-                  id="agree" 
-                  checked={formData.agreeToTerms} 
+                <input
+                  type="checkbox"
+                  id="agree"
+                  checked={formData.agreeToTerms}
                   onChange={e => setFormData({ ...formData, agreeToTerms: e.target.checked })}
                   className="rounded text-red-600 focus:ring-red-500"
                 />
@@ -659,10 +660,10 @@ export default function App() {
                 </label>
               </div>
 
-              <motion.button 
-                whileHover={{ scale: 1.02 }} 
+              <motion.button
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                type="submit" 
+                type="submit"
                 className="w-full bg-red-700 text-white py-3.5 rounded-full font-bold hover:bg-red-800 transition text-xs shadow-lg flex items-center justify-center gap-2 mt-2"
               >
                 <span>✈️</span> SUBMIT ENQUIRY
@@ -676,13 +677,13 @@ export default function App() {
       {/* 9. ANIMATED COURSE DETAIL POPUP MODAL */}
       <AnimatePresence>
         {selectedCourse && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4"
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -735,13 +736,13 @@ export default function App() {
       {/* 10. ANIMATED APPLY NOW POPUP MODAL */}
       <AnimatePresence>
         {isApplyModalOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4"
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -781,10 +782,10 @@ export default function App() {
                   </select>
                 </div>
                 <textarea placeholder="Any specific requirements?" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} className="border p-2 rounded text-xs w-full h-16 outline-none focus:border-red-600"></textarea>
-                <motion.button 
-                  whileHover={{ scale: 1.02 }} 
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  type="submit" 
+                  type="submit"
                   className="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 text-xs transition shadow-md"
                 >
                   CONFIRM APPLICATION
@@ -799,7 +800,7 @@ export default function App() {
       {/* 11. FOOTER */}
       <footer className="bg-[#0f1d2e] text-gray-400 py-12 px-6 text-xs border-t border-slate-800">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          
+
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="text-lg">💻</span>
