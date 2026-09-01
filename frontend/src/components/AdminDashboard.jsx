@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { API } from '../App';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lite-college-project.onrender.com';
 
 export default function AdminDashboard() {
   const [enquiries, setEnquiries] = useState([]);
@@ -14,19 +17,16 @@ export default function AdminDashboard() {
   const [editingFacultyId, setEditingFacultyId] = useState(null);
 
   const fetchData = () => {
-    fetch('http://localhost:5000/api/courses')
-      .then(res => res.json())
-      .then(data => setCourses(data))
-      .catch(err => console.error(err));
+    const fetchCourses = API ? API.get('/api/courses') : fetch(`${API_BASE_URL}/api/courses`).then(res => res.json());
+    const fetchFaculty = API ? API.get('/api/faculty') : fetch(`${API_BASE_URL}/api/faculty`).then(res => res.json());
+    const fetchEnquiries = API ? API.get('/api/enquiries') : fetch(`${API_BASE_URL}/api/enquiries`).then(res => res.json());
 
-    fetch('http://localhost:5000/api/faculty')
-      .then(res => res.json())
-      .then(data => setFaculty(data))
-      .catch(err => console.error(err));
-
-    fetch('http://localhost:5000/api/enquiries')
-      .then(res => res.json())
-      .then(data => setEnquiries(data))
+    Promise.all([fetchCourses, fetchFaculty, fetchEnquiries])
+      .then(([coursesRes, facultyRes, enquiriesRes]) => {
+        setCourses(coursesRes.data || coursesRes || []);
+        setFaculty(facultyRes.data || facultyRes || []);
+        setEnquiries(enquiriesRes.data || enquiriesRes || []);
+      })
       .catch(err => console.error(err));
   };
 
@@ -37,44 +37,60 @@ export default function AdminDashboard() {
   // Add or Update Course
   const handleSaveCourse = async (e) => {
     e.preventDefault();
-    const url = editingCourseId 
-      ? `http://localhost:5000/api/courses/${editingCourseId}` 
-      : 'http://localhost:5000/api/courses';
+    const endpoint = editingCourseId 
+      ? `/api/courses/${editingCourseId}` 
+      : '/api/courses';
     const method = editingCourseId ? 'PUT' : 'POST';
 
-    const res = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(courseData)
-    });
+    try {
+      let res;
+      if (API) {
+        res = editingCourseId ? await API.put(endpoint, courseData) : await API.post(endpoint, courseData);
+      } else {
+        res = await fetch(`${API_BASE_URL}${endpoint}`, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(courseData)
+        });
+      }
 
-    if (res.ok) {
       alert(editingCourseId ? 'Course Updated Successfully!' : 'Course Added Successfully!');
       setCourseData({ title: '', description: '', duration: '', price: '', badge: '', image: '' });
       setEditingCourseId(null);
       fetchData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to save course. Check server logs.');
     }
   };
 
   // Add or Update Faculty
   const handleSaveFaculty = async (e) => {
     e.preventDefault();
-    const url = editingFacultyId 
-      ? `http://localhost:5000/api/faculty/${editingFacultyId}` 
-      : 'http://localhost:5000/api/faculty';
+    const endpoint = editingFacultyId 
+      ? `/api/faculty/${editingFacultyId}` 
+      : '/api/faculty';
     const method = editingFacultyId ? 'PUT' : 'POST';
 
-    const res = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(facultyData)
-    });
+    try {
+      let res;
+      if (API) {
+        res = editingFacultyId ? await API.put(endpoint, facultyData) : await API.post(endpoint, facultyData);
+      } else {
+        res = await fetch(`${API_BASE_URL}${endpoint}`, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(facultyData)
+        });
+      }
 
-    if (res.ok) {
       alert(editingFacultyId ? 'Faculty Member Updated!' : 'Faculty Member Added!');
       setFacultyData({ name: '', role: '', bio: '', phone: '', image: '' });
       setEditingFacultyId(null);
       fetchData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to save faculty. Check server logs.');
     }
   };
 
@@ -106,16 +122,32 @@ export default function AdminDashboard() {
   // Delete Course
   const handleDeleteCourse = async (id) => {
     if (window.confirm('Are you sure you want to delete this course?')) {
-      const res = await fetch(`http://localhost:5000/api/courses/${id}`, { method: 'DELETE' });
-      if (res.ok) fetchData();
+      try {
+        if (API) {
+          await API.delete(`/api/courses/${id}`);
+        } else {
+          await fetch(`${API_BASE_URL}/api/courses/${id}`, { method: 'DELETE' });
+        }
+        fetchData();
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   // Delete Faculty
   const handleDeleteFaculty = async (id) => {
     if (window.confirm('Are you sure you want to delete this faculty member?')) {
-      const res = await fetch(`http://localhost:5000/api/faculty/${id}`, { method: 'DELETE' });
-      if (res.ok) fetchData();
+      try {
+        if (API) {
+          await API.delete(`/api/faculty/${id}`);
+        } else {
+          await fetch(`${API_BASE_URL}/api/faculty/${id}`, { method: 'DELETE' });
+        }
+        fetchData();
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
